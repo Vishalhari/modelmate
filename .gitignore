@@ -1,0 +1,62 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+
+modelmate/
+
+# Logs
+logs
+*.log
+*.log.*
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Runtime data
+lib-cov
+coverage
+.nyc_output
+.cache
+dist
+build
+tmp
+temp
+*.tmp
+
+# dotenv environment files
+.env
+.env.local
+.env.*.local
+
+# Frontend build
+frontend/dist
+frontend/build
+
+# Backend build
+backend/dist
+backend/build
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.bak
+*.orig
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+*.tgz
+*.zip
+*.tar.gz
