@@ -9,8 +9,15 @@ const router = express.Router();
 const modelsRoute = require('./routes/models');
 const chatRoute = require('./routes/chat');
 
-const PORT = process.env.PORT || 5000;
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
+const PORT = process.env.PORT || 50002;
+
+
+
+// Explicitly allow frontend origin
+const CLIENT_ORIGINS = process.env.CLIENT_ORIGINS
+  ? process.env.CLIENT_ORIGINS.split(',')
+  : ['http://localhost:3000'];  // 👈 set your frontend origin here
+
 
 const app = express();
 
@@ -18,11 +25,21 @@ app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());
 
-// CORS - only allow frontend origin
-app.use(cors({
-    origin: CLIENT_ORIGIN,
-    credentials: true
-  }));
+// ✅ CORS setup
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || CLIENT_ORIGINS.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,
+  })
+);
+// Explicitly handle preflight requests
+app.options('*', cors());
 
 // Basic rate limiting to avoid abuse
 const apiLimiter = rateLimit({
